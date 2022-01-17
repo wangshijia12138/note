@@ -14,11 +14,7 @@
 
 ## 1.什么是Mybatis
 
-
-
 >MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。
-
-
 
 >MyBatis 本是apache的一个[开源项目](https://baike.baidu.com/item/开源项目/3406069)iBatis, 2010年这个[项目](https://baike.baidu.com/item/项目/477803)由apache software foundation 迁移到了[google code](https://baike.baidu.com/item/google code/2346604)，并且改名为MyBatis 。2013年11月迁移到[Github](https://baike.baidu.com/item/Github/10145341)。
 >
@@ -74,12 +70,12 @@ mybatis的特点
 
 搭建环境 -> 导入依赖 -> 编写代码 -> 测试
 
-搭建环境 
+## 搭建环境 
 
 1. 准备好数据库和表
 2. 搭建基本的项目
 
-导入依赖
+## 导入依赖
 
 ```xml
 <dependency>
@@ -100,13 +96,13 @@ mybatis的特点
 </dependency>
 ```
 
-编写代码
+## 编写代码 CRUD
 
 ​	1. 编写配置文件
 
 2. 获取myabtis实例
 
-测试
+## 测试
 
 JUNIT
 
@@ -117,3 +113,54 @@ JUNIT
 ![image-20210720222213940](.img/image-20210720222213940.png)
 
 配置文件未被导出
+
+
+
+## 参数传递
+
+Map传递参数,直接从sql中取key (resultType="map")
+
+对象传递参数,直接在sql中取对象的属性即可 (resultType="com.wangshijia.pojo.User")
+
+只有一个基本类型的情况下,直接在sql中取 (不写)
+
+
+
+## 模糊查询,避免sql注入
+
+
+
+# 三、 配置解析
+
+![image-20210725215521810](.img/image-20210725215521810.png)
+
+mybatis-config.xml  (官方推荐命名)
+
+## 1. environment 
+
+MyBatis 可以配置成适应多种环境
+
+**不过要记住：尽管可以配置多个环境，但每个 SqlSessionFactory 实例只能选择一种环境。**
+
+如果你正在使用 Spring + MyBatis，则没有必要配置事务管理器，因为 Spring 模块会使用自带的管理器来覆盖前面的配置。
+
+默认事务管理器是JDBC
+
+默认数据源是POOL
+
+## 2. properties
+
+![image-20210725221041399](.img/image-20210725221041399.png)
+
+1. 可以直接引入外部文件
+2. 可以直接增加属性
+3. 如果都存在,存在优先级问题
+
+如果一个属性在不只一个地方进行了配置，那么，MyBatis 将按照下面的顺序来加载：
+
+- 首先读取在 properties 元素体内指定的属性。
+- 然后根据 properties 元素中的 resource 属性读取类路径下属性文件，或根据 url 属性指定的路径读取属性文件，并覆盖之前读取过的同名属性。
+- 最后读取作为方法参数传递的属性，并覆盖之前读取过的同名属性。
+
+## 3.typeAlias
+
